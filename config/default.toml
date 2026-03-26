@@ -1,0 +1,62 @@
+[general]
+max_threads = 8
+threat_score_threshold = 30
+
+[process]
+check_hidden = true
+check_deleted_executables = true
+check_memfd = true
+check_network_namespaces = true
+suspicious_names = [
+    "nc", "ncat", "netcat", "socat", "msfconsole", "metasploit",
+    "mimikatz", "empire", "cobalt", "meterpreter", "payload",
+    "shell.py", "rev_shell", "reverse_shell"
+]
+whitelist_processes = [
+    "systemd", "kthread", "rcu_sched", "migration", "watchdog"
+]
+
+[file_integrity]
+watch_dirs = [
+    "/etc", "/bin", "/sbin", "/usr/bin",
+    "/usr/sbin", "/usr/local/bin", "/tmp", "/var/tmp"
+]
+check_suid = true
+check_world_writable = true
+check_hidden_files = true
+check_large_files = true
+max_file_size_mb = 500
+critical_files = [
+    "/etc/passwd", "/etc/shadow", "/etc/sudoers",
+    "/etc/crontab", "/etc/hosts", "/etc/ld.so.preload",
+    "/etc/ld.so.conf", "/root/.bashrc", "/root/.profile",
+    "/root/.ssh/authorized_keys"
+]
+
+[log_analyzer]
+log_dirs = ["/var/log"]
+brute_force_threshold = 5
+brute_force_window_secs = 300
+check_privilege_escalation = true
+check_cron_changes = true
+check_new_users = true
+
+[network]
+suspicious_ports = [
+    4444, 4445, 4446, 4447,
+    1337, 31337,
+    6667, 6668, 6669, 6697,
+    8080, 8443, 8888,
+    9001, 9030,
+    12345, 54321, 65535,
+    2222, 2323,
+    11211, 27017, 6379
+]
+known_c2_ips = []
+known_c2_domains = [
+    "pastebin.com", "ngrok.io", "serveo.net", "localhost.run"
+]
+check_dns_tunneling = true
+check_tor = true
+check_reverse_shells = true
+high_entropy_dns_threshold = 3.5
