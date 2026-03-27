@@ -490,7 +490,7 @@ impl LogAnalyzer {
                 let content = fs::read_to_string(history_path).unwrap_or_default();
 
                 for (pattern, desc, mitre) in &suspicious_commands {
-                    let re = match Regex::new(pattern) {
+                    let re = match Regex::new(*pattern) {
                         Ok(r) => r,
                         Err(_) => continue,
                     };
@@ -521,7 +521,7 @@ impl LogAnalyzer {
                                 format!("History file: {}", history_path),
                                 format!("Commands: {}", matching_lines.join("\n")),
                             ])
-                            .with_mitre(mitre);
+                            .with_mitre(*mitre);
                         findings.push(r);
                         break; // one finding per pattern per user per file
                     }
