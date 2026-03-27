@@ -4,7 +4,7 @@ use clap::{Args, Parser, Subcommand};
 #[derive(Parser, Debug)]
 #[command(
     name = "lthf",
-    version = "1.0.0",
+    version = "2.0.0",
     about = "Linux Threat Hunting Framework — Detect, analyze & hunt threats in real-time",
     long_about = None,
     propagate_version = true,
@@ -59,6 +59,18 @@ pub struct ScanOptions {
     /// Hunt network threats
     #[arg(short, long)]
     pub network: bool,
+
+    /// Hunt persistence mechanisms (cron, systemd, rc.local, PAM, sudoers, etc.)
+    #[arg(short = 'P', long)]
+    pub persistence: bool,
+
+    /// Detect rootkit indicators (hidden procs, kernel hooks, LKM tampering)
+    #[arg(short = 'r', long)]
+    pub rootkit: bool,
+
+    /// Audit container security (Docker, Kubernetes, Podman environments)
+    #[arg(short = 'C', long)]
+    pub container: bool,
 
     /// Verbose findings output
     #[arg(short, long)]
