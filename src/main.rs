@@ -415,7 +415,7 @@ async fn generate_report_cmd(
     all_findings.extend(cs.scan().await?);
 
     let gen = ReportGenerator::new(all_findings, cfg.clone());
-    match opts.format.as_deref().unwrap_or("html") {
+    match opts.format.as_str() {
         "html" => gen.export_html(&opts.output)?,
         "csv" => gen.export_csv(&opts.output)?,
         _ => gen.export_json(&opts.output)?,
