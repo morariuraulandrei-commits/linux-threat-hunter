@@ -165,7 +165,8 @@ impl RootkitDetector {
                                 format!("Hidden process detected via signal test: PID {}", pid),
                                 format!(
                                     "Process with PID {} responds to kill(0) signal but does not appear in /proc listing. \
-                                     This indicates advanced kernel-level process hiding."
+                                     This indicates advanced kernel-level process hiding.",
+                                    pid
                                 ),
                                 Severity::Critical,
                                 "Rootkit",
