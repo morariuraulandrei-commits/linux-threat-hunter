@@ -1,7 +1,10 @@
+pub mod container_sentinel;
 pub mod file_integrity;
 pub mod log_analyzer;
 pub mod network_hunter;
+pub mod persistence_hunter;
 pub mod process_scanner;
+pub mod rootkit_detector;
 
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
