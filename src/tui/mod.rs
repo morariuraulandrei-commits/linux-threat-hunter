@@ -600,7 +600,7 @@ fn render_all_findings(f: &mut Frame, area: Rect, state: &mut AppState) {
         Row::new(vec![
             Cell::from(f.threat_score.to_string()).style(Style::default().fg(color).add_modifier(Modifier::BOLD)),
             Cell::from(format!("{}", f.severity)).style(Style::default().fg(color)),
-            Cell::from(f.category.as_str()),
+            Cell::from(f.category.clone()),
             Cell::from(title),
         ])
     }).collect();
