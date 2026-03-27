@@ -28,7 +28,7 @@ regex = "1"
 anyhow = "1"
 walkdir = "2"
 procfs = "0.16"
-nix = { version = "0.28", features = ["process", "fs", "user", "socket"] }
+nix = { version = "0.28", features = ["process", "fs", "user", "socket", "signal"] }
 log = "0.4"
 env_logger = "0.11"
 indicatif = { version = "0.17", features = ["tokio"] }
