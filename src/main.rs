@@ -10,10 +10,13 @@ use cli::{Cli, Commands};
 use clap::Parser;
 use colored::Colorize;
 use modules::{
+    container_sentinel::ContainerSentinel,
     file_integrity::FileIntegrityScanner,
     log_analyzer::LogAnalyzer,
     network_hunter::NetworkHunter,
+    persistence_hunter::PersistenceHunter,
     process_scanner::ProcessScanner,
+    rootkit_detector::RootkitDetector,
     ScanResult, Severity,
 };
 use report::ReportGenerator;
@@ -35,7 +38,7 @@ fn print_banner() {
     );
     println!(
         "{}",
-        "  Linux Threat Hunting Framework v1.0.0".bright_cyan().bold()
+        "  Linux Threat Hunting Framework v2.0.0".bright_cyan().bold()
     );
     println!(
         "{}",
@@ -213,6 +216,84 @@ async fn run_scan(
         all_findings.extend(findings);
     }
 
+    // ── Persistence Hunter ────────────────────────────────────────────────
+    if opts.all || opts.persistence {
+        println!(
+            "{} {}",
+            "▶".bright_yellow(),
+            "Hunting persistence mechanisms...".bold()
+        );
+        let mut ph = PersistenceHunter::new(cfg.clone());
+        let findings = ph.scan().await?;
+        let count = findings
+            .iter()
+            .filter(|f| matches!(f.severity, Severity::High | Severity::Critical))
+            .count();
+        if count > 0 {
+            println!(
+                "  {} {} persistence backdoors detected",
+                "⚠".bright_red(),
+                count.to_string().bright_red().bold()
+            );
+        } else {
+            println!("  {} No malicious persistence found", "✓".bright_green());
+        }
+        total_threats += count;
+        all_findings.extend(findings);
+    }
+
+    // ── Rootkit Detector ──────────────────────────────────────────────────
+    if opts.all || opts.rootkit {
+        println!(
+            "{} {}",
+            "▶".bright_yellow(),
+            "Detecting rootkit indicators...".bold()
+        );
+        let mut rd = RootkitDetector::new(cfg.clone());
+        let findings = rd.scan().await?;
+        let count = findings
+            .iter()
+            .filter(|f| matches!(f.severity, Severity::High | Severity::Critical))
+            .count();
+        if count > 0 {
+            println!(
+                "  {} {} rootkit indicators found",
+                "⚠".bright_red(),
+                count.to_string().bright_red().bold()
+            );
+        } else {
+            println!("  {} No rootkit indicators detected", "✓".bright_green());
+        }
+        total_threats += count;
+        all_findings.extend(findings);
+    }
+
+    // ── Container Sentinel ────────────────────────────────────────────────
+    if opts.all || opts.container {
+        println!(
+            "{} {}",
+            "▶".bright_yellow(),
+            "Auditing container security...".bold()
+        );
+        let mut cs = ContainerSentinel::new(cfg.clone());
+        let findings = cs.scan().await?;
+        let count = findings
+            .iter()
+            .filter(|f| matches!(f.severity, Severity::High | Severity::Critical))
+            .count();
+        if count > 0 {
+            println!(
+                "  {} {} container security violations",
+                "⚠".bright_red(),
+                count.to_string().bright_red().bold()
+            );
+        } else {
+            println!("  {} Container environment looks secure", "✓".bright_green());
+        }
+        total_threats += count;
+        all_findings.extend(findings);
+    }
+
     let elapsed = start.elapsed();
     println!();
     println!(
@@ -326,6 +407,12 @@ async fn generate_report_cmd(
     all_findings.extend(la.scan().await?);
     let mut nh = NetworkHunter::new(cfg.clone());
     all_findings.extend(nh.scan().await?);
+    let mut ph = PersistenceHunter::new(cfg.clone());
+    all_findings.extend(ph.scan().await?);
+    let mut rd = RootkitDetector::new(cfg.clone());
+    all_findings.extend(rd.scan().await?);
+    let mut cs = ContainerSentinel::new(cfg.clone());
+    all_findings.extend(cs.scan().await?);
 
     let gen = ReportGenerator::new(all_findings, cfg.clone());
     match opts.format.as_deref().unwrap_or("html") {
