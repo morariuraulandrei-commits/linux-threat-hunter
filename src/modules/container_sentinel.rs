@@ -776,6 +776,6 @@ trait FileMode {
 impl FileMode for std::fs::Permissions {
     fn mode(&self) -> u32 {
         use std::os::unix::fs::PermissionsExt;
-        self.mode()
+        PermissionsExt::mode(self)
     }
 }
