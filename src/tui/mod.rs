@@ -341,7 +341,7 @@ async fn do_scan(state: Arc<Mutex<AppState>>, cfg: Config) {
 }
 
 fn render_frame(f: &mut Frame, state: &mut AppState) {
-    let area = f.area();
+    let area = f.size();
 
     // Main layout
     let chunks = Layout::default()
@@ -571,7 +571,7 @@ fn render_findings_table(f: &mut Frame, area: Rect, state: &mut AppState, catego
                 Style::default().fg(Color::White),
             )),
     )
-    .row_highlight_style(Style::default().bg(Color::DarkGray));
+    .highlight_style(Style::default().bg(Color::DarkGray));
 
     f.render_stateful_widget(table, area, &mut state.table_state);
 }
@@ -624,7 +624,7 @@ fn render_all_findings(f: &mut Frame, area: Rect, state: &mut AppState) {
                 Style::default().fg(Color::White),
             )),
     )
-    .row_highlight_style(Style::default().bg(Color::DarkGray));
+    .highlight_style(Style::default().bg(Color::DarkGray));
 
     f.render_stateful_widget(table, area, &mut state.table_state);
 }
