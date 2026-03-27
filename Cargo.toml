@@ -1,8 +1,8 @@
 [package]
 name = "linux-threat-hunter"
-version = "1.0.0"
+version = "2.0.0"
 edition = "2021"
-description = "A powerful Linux Threat Hunting Framework with real-time process scanning, file integrity monitoring, log analysis, and network threat detection"
+description = "Linux Threat Hunting Framework — 7-module threat detection engine: processes, file integrity, logs, network, persistence, rootkits, and container security"
 license = "MIT"
 repository = "https://github.com/morariuraulandrei-commits/linux-threat-hunter"
 keywords = ["security", "threat-hunting", "linux", "forensics", "cybersecurity"]
