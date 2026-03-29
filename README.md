@@ -1,5 +1,16 @@
 # ⚡ Linux Threat Hunting Framework (LTHF)
 
+> **⚠️ Support / Errors?**
+> If you encounter any issues, bugs, or compilation errors, please contact:
+> **📧 contact@morariuandreiraul.com**
+> I'll do my best to help you as quickly as possible.
+
+<div align="center">
+  <img src="https://media1.tenor.com/m/XKNjuLjL7W8AAAAd/naruto-thumbs-up.gif" alt="Naruto thumbs up" width="200"/>
+</div>
+
+---
+
 <p align="center">
   <img src="https://img.shields.io/badge/language-Rust-orange?style=for-the-badge&logo=rust" alt="Rust">
   <img src="https://img.shields.io/badge/platform-Linux-blue?style=for-the-badge&logo=linux" alt="Linux">
