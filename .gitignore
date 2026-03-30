@@ -18,3 +18,8 @@ config/custom.toml
 *.swp
 *.swo
 .DS_Store
+
+# Secrets
+config.ini
+.env
+*.env
